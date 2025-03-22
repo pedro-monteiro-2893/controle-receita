@@ -41,8 +41,20 @@
   color: #888;
 }
 
-.navbar {
+.navbar-custom {
   width: 100%;
   margin: 0;
   padding: 0;
 }
+
+.navbar-custom {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.navbar-custom .navbar-brand, 
+.navbar-custom .nav-link {
+  font-size: 1.2rem; /* Aumenta o tamanho da fonte */
+  font-weight: bold; /* Deixa o texto mais grosso */
+}
+

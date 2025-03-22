@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" className="navbar-custom">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">Controle de Receitas</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -12,6 +12,7 @@ const NavigationBar = () => {
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/historico">Histórico</Nav.Link>
             <Nav.Link as={Link} to="/receitas">Receitas</Nav.Link>
+            <Nav.Link as={Link} to="/fonte">Fontes</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

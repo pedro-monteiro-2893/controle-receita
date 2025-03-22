@@ -16,28 +16,30 @@ const Receitas = () => {
   return (
     <Container className="mt-4">
       <h2>Controle de Receitas</h2>
-      
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label>Descrição</Form.Label>
-          <Form.Control 
-            type="text" 
-            value={descricao} 
-            onChange={(e) => setDescricao(e.target.value)}
-            placeholder="Ex: Salário, Venda, Presente..."
-          />
-        </Form.Group>
+          <div className="d-flex gap-3"> {/* Flexbox para alinhar lado a lado */}
+            <div className="w-50">
+              <Form.Label>Descrição</Form.Label>
+              <Form.Control
+                type="text"
+                value={descricao}
+                onChange={(e) => setDescricao(e.target.value)}
+                placeholder="Ex: Salário, Venda, Presente..."
+              />
+            </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Valor (R$)</Form.Label>
-          <Form.Control 
-            type="number" 
-            value={valor} 
-            onChange={(e) => setValor(e.target.value)}
-            placeholder="Ex: 500.00"
-          />
+            <div className="w-50">
+              <Form.Label>Valor (R$)</Form.Label>
+              <Form.Control
+                type="number"
+                value={valor}
+                onChange={(e) => setValor(e.target.value)}
+                placeholder="Ex: 500.00"
+              />
+            </div>
+          </div>
         </Form.Group>
-
         <Button variant="success" onClick={adicionarReceita}>Adicionar Receita</Button>
       </Form>
 
