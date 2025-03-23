@@ -15,3 +15,5 @@ export const formatCNPJ = (value) => {
         return `${numericValue.slice(0, 2)}.${numericValue.slice(2, 5)}.${numericValue.slice(5, 8)}/${numericValue.slice(8, 12)}-${numericValue.slice(12, 14)}`;
     }
 };
+
+export const possuiFontes = (fontes) => fontes.size > 0;
