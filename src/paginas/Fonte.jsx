@@ -93,15 +93,17 @@ const Fonte = () => {
 
     return (
         <Container className="mt-4">
-            <h2>Fontes Pagadoras</h2>
+            <h2 className="text-center mb-4 text-primary fw-bold display-5">
+                <span style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '1px' }}>💰 Fontes Pagadoras</span>
+            </h2>
 
             {displayForm &&
-                <Container className="bg-light border rounded p-4 mt-4">
+                <Container className="bg-light border rounded p-4 mt-4 shadow-sm">
                 <Form>
                     <Form.Group className="mb-3">
                         <Row className="justify-content-center g-3"> {/* Centraliza e adiciona espaçamento */}
                             <Col xs={12} md={4}> {/* Ocupa 4 colunas no md+ e 12 em telas menores */}
-                                <Form.Label>Nome</Form.Label>
+                                <Form.Label className="fw-bold">Nome</Form.Label>
                                 <Form.Control
                                     required={true}
                                     type="text"
@@ -112,7 +114,7 @@ const Fonte = () => {
                             </Col>
             
                             <Col xs={12} md={4}>
-                                <Form.Label>Descrição</Form.Label>
+                                <Form.Label className="fw-bold">Descrição</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={descricao}
@@ -122,7 +124,7 @@ const Fonte = () => {
                             </Col>
             
                             <Col xs={12} md={4}>
-                                <Form.Label>CNPJ</Form.Label>
+                                <Form.Label className="fw-bold">CNPJ</Form.Label>
                                 <Form.Control
                                     required={true}
                                     type="text"

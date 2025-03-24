@@ -87,14 +87,16 @@ const Receitas = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Controle de Receitas</h2>
-      <Container className="bg-light border rounded p-4 mt-4">
+      <h2 className="text-center mb-4 text-primary fw-bold display-5">
+        <span style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '1px' }}>📊 Controle de Receitas</span>
+      </h2>
+      <Container className="bg-light border rounded p-4 mt-4 shadow-sm">
 
         <Form>
           <Form.Group className="mb-3">
             <Row>
               <Col xs={12} md={4}>
-                <Form.Label>Fonte</Form.Label>
+                <Form.Label>💰 Fonte</Form.Label>
                 <Form.Select
                   value={fonteSelecionada ? fonteSelecionada.id : ""}
                   onChange={(e) => {
@@ -112,7 +114,7 @@ const Receitas = () => {
               </Col>
 
               <Col xs={12} md={4}>
-                <Form.Label>Valor (R$)</Form.Label>
+                <Form.Label>📊 Valor (R$)</Form.Label>
                 <Form.Control
                   type="number"
                   value={valor}
@@ -122,7 +124,7 @@ const Receitas = () => {
               </Col>
 
               <Col xs={12} md={2}>
-                <Form.Label>Mês</Form.Label>
+                <Form.Label>🗓️ Mês</Form.Label>
                 <Form.Select
                   value={mesSelecionado}
                   onChange={(e) => setMesSelecionado(e.target.value)}
@@ -137,7 +139,7 @@ const Receitas = () => {
               </Col>
 
               <Col xs={12} md={2}>
-                <Form.Label>Ano</Form.Label>
+                <Form.Label>🗓️ Ano</Form.Label>
                 <Form.Select
                   value={anoSelecionado}
                   onChange={(e) => setAnoSelecionado(e.target.value)}

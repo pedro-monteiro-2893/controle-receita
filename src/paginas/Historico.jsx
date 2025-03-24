@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Form, Table, Row, Col } from "react-bootstrap";
+import { Container, Form, Table, Row, Col, Card } from "react-bootstrap";
 import { buscarReceitas, buscarFontes } from "../utils/database";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, Legend } from "recharts";
 
@@ -25,7 +25,7 @@ const Historico = () => {
   }, []);
 
   // Filtrando os dados conforme os filtros selecionados
-  const receitasFiltradas = receitas.filter((item) => 
+  const receitasFiltradas = receitas.filter((item) =>
     (!filtroAno || item.ano === filtroAno) &&
     (!filtroMes || item.mes === filtroMes) &&
     (!filtroFonte || item.idFonte === filtroFonte)
@@ -36,7 +36,7 @@ const Historico = () => {
 
     const receitasFonte = receitasFiltradas.filter((r) => String(r.idFonte) == String(fonte.id))
     const total = receitasFonte.reduce((acc, cur) => {
-         return acc + parseFloat(cur.valor);
+      return acc + parseFloat(cur.valor);
     }, 0);
 
     return { name: fonte.nome, total };
@@ -44,7 +44,7 @@ const Historico = () => {
 
   // Criando dados para gráfico de pizza (receitas por mês)
   const meses = [
-    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
@@ -55,35 +55,46 @@ const Historico = () => {
       .reduce((acc, cur) => acc + parseFloat(cur.valor), 0),
   })).filter(d => d.value > 0); // Remove meses sem valores
 
+  const dadosGraficoPizzaFonte = fontes.map((fonte) => ({
+    name: fonte.nome,
+    value: receitas
+      .filter((r) => r.idFonte == fonte.id)
+      .reduce((acc, cur) => acc + parseFloat(cur.valor), 0),
+
+  })).filter(d => d.value > 0);
+
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28AFF", "#FF6384", "#36A2EB", "#FFCD56"];
 
   return (
     <Container className="mt-4">
-      <h2 className="text-center">Histórico de Receitas</h2>
-      
-      {/* Filtros */}
-      <Row className="mb-4">
-        <Col>
-          <Form.Label>Ano</Form.Label>
-          <Form.Select onChange={(e) => setFiltroAno(e.target.value)}>
+    <h2 className="text-center mb-4 text-primary fw-bold display-5">
+        <span style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '1px' }}>📊 Histórico de Receitas</span>
+    </h2>
+
+    {/* Filtros */}
+    <Card className="p-3 shadow-sm mb-4">
+      <Row className="gy-3">
+        <Col md={4}>
+          <Form.Label className="fw-bold">📅 Ano</Form.Label>
+          <Form.Select className="shadow-sm" onChange={(e) => setFiltroAno(e.target.value)}>
             <option value="">Todos</option>
             {[...new Set(receitas.map((r) => r.ano))].map((ano) => (
               <option key={ano} value={ano}>{ano}</option>
             ))}
           </Form.Select>
         </Col>
-        <Col>
-          <Form.Label>Mês</Form.Label>
-          <Form.Select onChange={(e) => setFiltroMes(e.target.value)}>
+        <Col md={4}>
+          <Form.Label className="fw-bold">🗓️ Mês</Form.Label>
+          <Form.Select className="shadow-sm" onChange={(e) => setFiltroMes(e.target.value)}>
             <option value="">Todos</option>
             {meses.map((mes, index) => (
               <option key={index} value={mes}>{mes}</option>
             ))}
           </Form.Select>
         </Col>
-        <Col>
-          <Form.Label>Fonte Pagadora</Form.Label>
-          <Form.Select onChange={(e) => setFiltroFonte(e.target.value)}>
+        <Col md={4}>
+          <Form.Label className="fw-bold">💰 Fonte Pagadora</Form.Label>
+          <Form.Select className="shadow-sm" onChange={(e) => setFiltroFonte(e.target.value)}>
             <option value="">Todas</option>
             {fontes.map((fonte) => (
               <option key={fonte.id} value={fonte.id}>{fonte.nome}</option>
@@ -91,21 +102,25 @@ const Historico = () => {
           </Form.Select>
         </Col>
       </Row>
+    </Card>
 
-      {/* Gráficos */}
-      <Row className="mt-4 d-flex justify-content-center">
-        <Col md={6} className="text-center">
-          <h4>Valores por Fonte Pagadora</h4>
+    {/* Gráficos afetados pelos filtros */}
+    <Row className="mt-4 g-4">
+      <Col md={6}>
+        <Card className="p-3 shadow-sm text-center">
+          <h4 className="mb-3">📊 Valores por Fonte Pagadora</h4>
           <BarChart width={400} height={300} data={dadosGraficoBarras}>
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="total" fill="#8884d8" />
+            <Bar dataKey="total" fill="#8884d8" radius={[5, 5, 0, 0]} />
           </BarChart>
-        </Col>
-        
-        <Col md={6} className="text-center">
-          <h4>Receitas por Mês</h4>
+        </Card>
+      </Col>
+
+      <Col md={6}>
+        <Card className="p-3 shadow-sm text-center">
+          <h4 className="mb-3">📈 Receitas por Mês</h4>
           <PieChart width={400} height={300}>
             <Pie data={dadosGraficoPizza} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100}>
               {dadosGraficoPizza.map((entry, index) => (
@@ -115,12 +130,31 @@ const Historico = () => {
             <Tooltip />
             <Legend />
           </PieChart>
-        </Col>
-      </Row>
-    </Container>
+        </Card>
+      </Col>
+    </Row>
+
+    {/* Gráfico separado, sem filtros */}
+    <Row className="mt-5">
+      <Col md={8} className="mx-auto">
+        <Card className="p-4 shadow-lg text-center bg-light">
+          <h3 className="mb-3 text-primary">🏦 Receita Total por Fonte Pagadora</h3>
+          <p className="text-muted">🔒 Este gráfico representa todas as receitas acumuladas por fonte pagadora e **não é afetado pelos filtros acima**.</p>
+          <PieChart width={400} height={300}>
+            <Pie data={dadosGraficoPizzaFonte} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110}>
+              {dadosGraficoPizzaFonte.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </Card>
+      </Col>
+    </Row>
+  </Container>
   );
 };
 
 export default Historico;
 
-  
