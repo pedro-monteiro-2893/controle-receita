@@ -13,7 +13,7 @@ const NavigationBar = () => {
             <Nav.Link as={Link} to="/historico">Histórico</Nav.Link>
             <Nav.Link as={Link} to="/receitas">Receitas</Nav.Link>
             <Nav.Link as={Link} to="/fonte">Fontes</Nav.Link>
-            <Nav.Link as={Link} to="/relatorio">Fontes</Nav.Link>
+            <Nav.Link as={Link} to="/relatorio">Relatorio</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
