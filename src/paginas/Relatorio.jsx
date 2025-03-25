@@ -91,6 +91,7 @@ const Relatorio = () => {
                                 {/* 🔹 Linha de totais */}
                                 <tr className="fw-bold bg-light">
                                     <td>Total</td>
+                                    <td>-</td>
                                     <td>R$ {totalRecebido.toFixed(2)}</td>
                                     <td>R$ {totalPrevisaoIR.toFixed(2)}</td>
                                     <td>-</td>
