@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { Container, Form, Button, Table, Row, Col, Alert } from "react-bootstrap";
 import { buscarFontes, buscarReceitas, adicionarReceita, removerReceitaDoBanco } from "../utils/database";
-import { anosDisponiveis, mesesDoAno } from "../utils/util";
+import { anosDisponiveis, mesesDoAno, ordemMeses } from "../utils/util";
 import { confirmAlert } from "react-confirm-alert"; // Biblioteca para confirmação
 import "react-confirm-alert/src/react-confirm-alert.css"; // Estilos padrão
 import { FaTrash } from "react-icons/fa";
-import { BiPencil } from "react-icons/bi";
 
 const Receitas = () => {
   const [fontes, setFontes] = useState([]);
@@ -175,7 +174,12 @@ const Receitas = () => {
           </tr>
         </thead>
         <tbody>
-          {receitas.map((item, index) => (
+          { [... receitas].sort((a,b) => 
+          {const dataA = a.ano *100 + ordemMeses[a.mes];
+           const dataB = b.ano * 100 + ordemMeses[b.mes];
+           return dataB - dataA;
+          })
+          .map((item, index) => (
             <tr key={item.id}>
               <td>{item.nome}</td>
               <td>R$ {parseFloat(item.valor).toFixed(2)}</td>
@@ -187,13 +191,6 @@ const Receitas = () => {
                   title="Deletar Fonte"
                   style={{ cursor: "pointer" }}
                   onClick={() => confirmarRemocao(item)}
-                />
-              </td>
-              <td className="text-center">
-                <BiPencil
-                  className="text-muted"
-                  title="Futura implementação"
-                  style={{ cursor: "pointer" }}
                 />
               </td>
             </tr>

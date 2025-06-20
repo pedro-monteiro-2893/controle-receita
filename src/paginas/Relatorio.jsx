@@ -61,72 +61,84 @@ const Relatorio = () => {
 
 
     return (
-        <Container className="mt-4">
-            <h2 className="text-center mb-4 text-primary fw-bold display-5">
-                <span style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '1px' }}>📊 Relatório de Receitas</span>
-            </h2>
-            <Container className="bg-light border rounded p-4 mt-4 shadow-sm">
-                <Row>
-                    <Col xs={12} md={12}>
-                        <Table striped bordered hover className="mt-4">
-                            <thead>
-                                <tr>
-                                    <th>Fonte</th>
-                                    <th>Cnpj</th>
-                                    <th>Total Recebido</th>
-                                    <th>Previsão IR</th>
-                                    <th>Ano</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {dadosTabela.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{item.nome}</td>
-                                        <td>{item.cnpj}</td>
-                                        <td>R$ {item.total.toFixed(2)}</td>
-                                        <td>R$ {item.previsaoIR.toFixed(2)}</td>
-                                        <td>{item.ano}</td>
-                                    </tr>
-                                ))}
-                                {/* 🔹 Linha de totais */}
-                                <tr className="fw-bold bg-light">
-                                    <td>Total</td>
-                                    <td>-</td>
-                                    <td>R$ {totalRecebido.toFixed(2)}</td>
-                                    <td>R$ {totalPrevisaoIR.toFixed(2)}</td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
-                        </Table>
+    <Container className="mt-4">
+      <h2 className="text-center mb-4 text-primary fw-bold display-5">
+        <span style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "1px" }}>
+          📊 Relatório de Receitas
+        </span>
+      </h2>
 
-                    </Col>
-                </Row>
-            </Container>
-            <Card className="p-3 shadow-sm mb-4">
-                <Row className="gy-3">
-                    <Col md={4}>
-                        <Form.Label className="fw-bold">📅 Ano</Form.Label>
-                        <Form.Select className="shadow-sm" onChange={(e) => setFiltroAno(e.target.value)}>
-                            <option value="">Todos</option>
-                            {[...new Set(receitas.map((r) => r.ano))].map((ano) => (
-                                <option key={ano} value={ano}>{ano}</option>
-                            ))}
-                        </Form.Select>
-                    </Col>
-                    <Col md={4} className="d-flex justify-content-center align-items-center h-100">
-                        <Button
-                            variant="primary"
-                            className="d-flex align-items-center gap-2"
-                            onClick={() => gerarRelatorioPDF(receitasPorFonte)} // 🔹 Agora só executa ao clicar
-                        >
-                            <FaFilePdf size={18} />
-                            Gerar PDF
-                        </Button>
-                    </Col>
-                </Row>
-            </Card>
-        </Container>
-    );
+      <Container className="bg-light border rounded p-4 mt-4 shadow-sm">
+        <Row>
+          <Col xs={12}>
+              <Table striped bordered hover className="mt-3">
+                <thead>
+                  <tr>
+                    <th>Fonte</th>
+                    <th>CNPJ</th>
+                    <th>Total Recebido</th>
+                    <th>Previsão IR</th>
+                    <th>Ano</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dadosTabela.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.nome}</td>
+                      <td>{item.cnpj}</td>
+                      <td>R$ {item.total.toFixed(2)}</td>
+                      <td>R$ {item.previsaoIR.toFixed(2)}</td>
+                      <td>{item.ano}</td>
+                    </tr>
+                  ))}
+                  <tr className="fw-bold bg-light">
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>R$ {totalRecebido.toFixed(2)}</td>
+                    <td>R$ {totalPrevisaoIR.toFixed(2)}</td>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+              </Table>
+          </Col>
+        </Row>
+      </Container>
+
+      <Card className="p-3 shadow-sm my-4">
+        <Row className="gy-3">
+          <Col xs={12} md={6}>
+            <Form.Label className="fw-bold">📅 Ano</Form.Label>
+            <Form.Select
+              className="shadow-sm"
+              onChange={(e) => setFiltroAno(e.target.value)}
+            >
+              <option value="">Todos</option>
+              {[...new Set(receitas.map((r) => r.ano))].map((ano) => (
+                <option key={ano} value={ano}>
+                  {ano}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
+
+          <Col
+            xs={12}
+            md={6}
+            className="d-flex justify-content-md-end justify-content-center align-items-end"
+          >
+            <Button
+              variant="primary"
+              className="d-flex align-items-center gap-2 mt-3 mt-md-0"
+              onClick={() => gerarRelatorioPDF(receitasPorFonte)}
+            >
+              <FaFilePdf size={18} />
+              Gerar PDF
+            </Button>
+          </Col>
+        </Row>
+      </Card>
+    </Container>
+  );
 };
 
 export default Relatorio;
